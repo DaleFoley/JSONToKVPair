@@ -1,0 +1,26 @@
+{
+	"Variables": [
+		{
+			"Id": "9c550ea5-68a9-d271-c6ad-51d15bf07cd2",
+			"Name": "newUser.enabled",
+			"Value": "false",
+			"Description": null,
+			"Scope": {},
+			"IsEditable": true,
+			"Prompt": null,
+			"Type": "String",
+			"IsSensitive": false
+		},
+		{
+			"Id": "03486300-d8a1-da7d-2b11-b37dd4992bd2",
+			"Name": "mail.smtp.password",
+			"Value": null,
+			"Description": null,
+			"Scope": {},
+			"IsEditable": true,
+			"Prompt": null,
+			"Type": "String",
+			"IsSensitive": false
+		}
+	]
+}
