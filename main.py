@@ -1,22 +1,43 @@
-# This is a sample Python script.
-
-# Press Ctrl+F5 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
 import json
+import sys
+import os
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    if len(sys.argv) < 3:
+        print("Require one argument defining the key and another defining the value to build a key:value pair file."
+              " Require file name. Example: JSONToKVPair name value C:/path/to/file.json")
+        exit()
 
-    fileToProcess = open("variables.json")
+    key_arg = sys.argv[1]
+    value_arg = sys.argv[2]
+    file_name = sys.argv[3]
+
+    fileToProcess = open(file_name)
     jsonFileToProcess = json.load(fileToProcess)
+    fileToProcess.close()
 
-    print(jsonFileToProcess)
+    fileToWrite = ""
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    for key in jsonFileToProcess['Variables']:
+        if key_arg in key and value_arg in key:
+            if key[key_arg] is not None:
+                fileToWrite += key[key_arg] + ":"
+            else:
+                fileToWrite += "Null:"
+
+            if key[value_arg] is not None:
+                fileToWrite += key[value_arg] + "," + "\n"
+            else:
+                fileToWrite += "Null" + "," + "\n"
+        else:
+            raise ValueError("key and/or value argument was not found in JSON file.")
+
+    if fileToWrite[-2:] == ',\n':
+        fileToWrite = fileToWrite[:-2]
+        fileToWrite += '\n'
+
+    savedFilePath = os.path.splitext(os.path.basename(file_name))[0] + ".txt"
+
+    savedFile = open(savedFilePath, 'w')
+    savedFile.write(fileToWrite)
+    savedFile.close()
